@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Building {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  street      String
+  number      String
+  district    String
+  city        String
+  state       String
+  BuildingKey BuildingKey[]
+  New         New[]
+  Resident    Resident[]
+
+  @@map("buildings")
+}
+
+model BuildingKey {
+  id         Int      @id @default(autoincrement())
+  key        String   @unique
+  buildingId Int      @unique
+  building   Building @relation(fields: [buildingId], references: [id])
+
+  @@map("buildingKeys")
+}
+
+model New {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  buildingId  Int
+  building    Building @relation(fields: [buildingId], references: [id])
+  createAt    DateTime
+
+  @@map("news")
+}
+
+model Resident {
+  id            Int             @id @default(autoincrement())
+  name          String
+  cpf           String          @unique
+  email         String?         @unique
+  password      String?
+  apartment     String
+  buildingId    Int
+  building      Building        @relation(fields: [buildingId], references: [id])
+  isLiving      Boolean         @default(false)
+  List          List[]
+  ResidentGuest ResidentGuest[]
+
+  @@map("residents")
+}
+
+model List {
+  id            Int             @id @default(autoincrement())
+  title         String
+  residentId    Int
+  resident      Resident        @relation(fields: [residentId], references: [id])
+  numberGuests  Int
+  ResidentGuest ResidentGuest[]
+
+  @@unique([title, residentId], name: "listIdentifier")
+  @@map("lists")
+}
+
+model Guest {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  cpf           String?         @unique
+  cel           String?         @unique
+  ResidentGuest ResidentGuest[]
+
+  @@map("guests")
+}
+
+model ResidentGuest {
+  id         Int      @id @default(autoincrement())
+  residentId Int
+  resident   Resident @relation(fields: [residentId], references: [id])
+  listId     Int
+  list       List     @relation(fields: [listId], references: [id])
+  guestId    Int
+  guest      Guest    @relation(fields: [guestId], references: [id])
+  confirmed  Boolean  @default(false)
+
+  @@map("residentGuests")
+}
