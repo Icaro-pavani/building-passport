@@ -30,14 +30,14 @@ async function main() {
   const residents = [
     {
       name: "Fulano",
-      cpf: "44455533399",
+      cpf: "444.555.333-99",
       apartment: "33C",
       buildingId: buildingRegistered.id,
       isLiving: true,
     },
     {
       name: "Fulana",
-      cpf: "44455463399",
+      cpf: "444.554.633-99",
       apartment: "12C",
       buildingId: buildingRegistered.id,
       isLiving: true,
