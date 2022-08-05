@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 import { prisma } from "../src/config/database.js";
 
 async function main() {
@@ -45,6 +47,8 @@ async function main() {
   ];
 
   residents.map(async (resident) => {
+    const SALT = 13;
+    resident.cpf = bcrypt.hashSync(resident.cpf, SALT);
     await prisma.resident.upsert({
       where: { cpf: resident.cpf },
       update: {},

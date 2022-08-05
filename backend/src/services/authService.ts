@@ -6,13 +6,15 @@ import {
   unprocessableError,
 } from "../middlewares/handleErrorsMiddleware.js";
 import residentRepository from "../repositories/residentRepository.js";
+import { LoginData } from "../schemas/loginSchema.js";
 import { ResidentData } from "../schemas/residentSchema.js";
+import tokenAPI from "../utils/tokenAPI.js";
 
 async function signUpResident(residentInfo: ResidentData) {
   const SALT = 13;
   const registeredResident = await residentRepository.findById(residentInfo.id);
 
-  if (registeredResident.cpf !== residentInfo.cpf) {
+  if (!bcrypt.compareSync(residentInfo.cpf, registeredResident.cpf)) {
     throw conflictError("Wrong cpf informed!");
   }
 
@@ -31,13 +33,29 @@ async function signUpResident(residentInfo: ResidentData) {
   }
 
   const residentId = residentInfo.id;
-  delete residentInfo.id;
-  delete residentInfo.confirmPassword;
+  const residentSignUpData = {
+    email: residentInfo.email,
+    password: bcrypt.hashSync(residentInfo.password, SALT),
+  };
 
-  residentInfo.password = bcrypt.hashSync(residentInfo.password, SALT);
-
-  await residentRepository.register(residentId, residentInfo);
+  await residentRepository.register(residentId, residentSignUpData);
 }
 
-const authService = { signUpResident };
+async function loginResident(loginInfo: LoginData) {
+  const registeredResident = await residentRepository.findByEmail(
+    loginInfo.email
+  );
+
+  if (!registeredResident) {
+    throw unprocessableError("Email not registerd!");
+  }
+
+  if (!bcrypt.compareSync(loginInfo.password, registeredResident.password)) {
+    throw unauthorizedError("Wrong password!");
+  }
+
+  return tokenAPI.generateToken(registeredResident.id);
+}
+
+const authService = { signUpResident, loginResident };
 export default authService;
