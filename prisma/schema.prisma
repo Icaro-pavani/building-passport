@@ -48,8 +48,8 @@ model New {
 model Resident {
   id            Int             @id @default(autoincrement())
   name          String
-  cpf           String          @unique
-  email         String?         @unique
+  cpf           String
+  email         String?
   password      String?
   apartment     String
   buildingId    Int
@@ -58,6 +58,8 @@ model Resident {
   List          List[]
   ResidentGuest ResidentGuest[]
 
+  @@unique([cpf, buildingId])
+  @@unique([email, buildingId])
   @@map("residents")
 }
 
