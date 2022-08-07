@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, MenuItem } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -75,12 +75,14 @@ const buttonModalStyle = {
 
 export default function LoginPage() {
   const [loginInfo, setLoginInfo] = useState({
+    buildingId: "",
     email: "",
     password: "",
   });
   const [disabled, setDisabled] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [buildings, setBuildings] = useState([]);
 
   const { resident, setResident } = useContext(ResidentContext);
 
@@ -116,12 +118,37 @@ export default function LoginPage() {
     if (!!resident.token) {
       navigate("/main");
     }
+    api
+      .getBuildings()
+      .then(({ data }) => {
+        setBuildings(data.buildings);
+      })
+      .catch((error) => {
+        setModalIsOpen((prevState) => !prevState);
+        setErrorMessage(error.response.data);
+      });
   }, [resident, navigate]);
 
   return (
     <LoginContainer>
       <h1>Building Passport</h1>
       <StyledForm onSubmit={loginResident}>
+        <TextField
+          name="buildingId"
+          sx={{ marginTop: "10px" }}
+          label="Condomínio"
+          select
+          variant="outlined"
+          onChange={updateState}
+          value={loginInfo.buildingId}
+          required
+        >
+          {buildings.map((building) => (
+            <MenuItem key={building.id} value={building.id}>
+              {building.name}
+            </MenuItem>
+          ))}
+        </TextField>
         <TextField
           name="email"
           sx={{ marginTop: "10px" }}
