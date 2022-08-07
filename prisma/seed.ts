@@ -50,7 +50,12 @@ async function main() {
     const SALT = 13;
     resident.cpf = bcrypt.hashSync(resident.cpf, SALT);
     await prisma.resident.upsert({
-      where: { cpf: resident.cpf, buildingId: resident.buildingId },
+      where: {
+        residentIdentifier: {
+          cpf: resident.cpf,
+          buildingId: resident.buildingId,
+        },
+      },
       update: {},
       create: resident,
     });
