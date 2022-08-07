@@ -1,33 +1,11 @@
 import styled from "styled-components";
-import { Button, TextField } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import api from "../services/api";
 
 Modal.setAppElement(document.querySelector(".root"));
-
-const textFieldStyle = {
-  "& label.Mui-focused": {
-    color: "green",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "green",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "red",
-      backgroundColor: "#00000050",
-      color: "#000",
-    },
-    "&:hover fieldset": {
-      borderColor: "yellow",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "green",
-    },
-  },
-};
 
 const modalStyles = {
   content: {
@@ -72,14 +50,20 @@ const buttonModalStyle = {
   fontFamily: `"Recursive", sans-serif`,
 };
 
-export default function LoginPage() {
-  const [loginInfo, setLoginInfo] = useState({
+export default function SignUpPage() {
+  const [signUpInfo, setSignUpInfo] = useState({
+    buildingId: "",
+    id: "",
+    cpf: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [buildings, setBuildings] = useState([]);
+  const [residents, setResidents] = useState([]);
 
   const navigate = useNavigate();
 
@@ -89,36 +73,80 @@ export default function LoginPage() {
 
   function updateState(event) {
     const { name, value } = event.target;
-    setLoginInfo((prevState) => ({ ...prevState, [name]: value }));
+    setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  function loginResident(event) {
-    event.preventDefault();
-    setDisabled(true);
+  useEffect(() => {
     api
-      .login(loginInfo)
+      .getBuildings()
       .then(({ data }) => {
-        localStorage.setItem("resident", JSON.stringify(data));
-        navigate("/main");
+        setBuildings(data.buildings);
       })
       .catch((error) => {
-        triggerModal();
+        setModalIsOpen((prevState) => !prevState);
         setErrorMessage(error.response.data);
-        setDisabled(false);
       });
-  }
+  }, []);
 
-  return (
-    <LoginContainer>
+  return buildings.length !== 0 ? (
+    <SignUpContainer>
       <h1>Building Passport</h1>
-      <StyledForm onSubmit={loginResident}>
+      <StyledForm>
+        <TextField
+          name="buildingId"
+          sx={{ marginTop: "10px" }}
+          label="Condomínio"
+          select
+          variant="outlined"
+          onChange={(event) => {
+            const { name, value } = event.target;
+            setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
+            setDisabled(!disabled);
+          }}
+          value={signUpInfo.buildingId}
+          required
+        >
+          {buildings.map((building) => (
+            <MenuItem key={building.id} value={building.id}>
+              {building.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          name="id"
+          sx={{ marginTop: "10px" }}
+          label="Residente"
+          select
+          variant="outlined"
+          onChange={(event) => {
+            const { name, value } = event.target;
+            setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
+          }}
+          value={signUpInfo.id}
+          disabled={disabled}
+          required
+        >
+          {buildings.map((building) => (
+            <MenuItem key={building.id} value={building.id}>
+              {building.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          name="cpf"
+          sx={{ marginTop: "10px" }}
+          label="CPF"
+          type="text"
+          variant="outlined"
+          onChange={updateState}
+          required
+        />
         <TextField
           name="email"
           sx={{ marginTop: "10px" }}
           label="E-mail"
           type="email"
           variant="outlined"
-          disabled={disabled}
           onChange={updateState}
           required
         />
@@ -128,20 +156,23 @@ export default function LoginPage() {
           label="Senha"
           type="password"
           variant="outlined"
-          disabled={disabled}
           onChange={updateState}
           required
         />
-        <Button
-          variant="contained"
+        <TextField
+          name="confirmPassword"
           sx={{ marginTop: "10px" }}
-          type="submit"
-          disabled={disabled}
-        >
-          Entrar
+          label="Confirme a Senha"
+          type="password"
+          variant="outlined"
+          onChange={updateState}
+          required
+        />
+        <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
+          Cadastrar
         </Button>
       </StyledForm>
-      <StyledLink to="/sign-up">Não possui cadastro?</StyledLink>
+      <StyledLink to="/">Já possui cadastro?</StyledLink>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={triggerModal}
@@ -154,11 +185,13 @@ export default function LoginPage() {
           Ok
         </button>
       </Modal>
-    </LoginContainer>
+    </SignUpContainer>
+  ) : (
+    <h1>Loading</h1>
   );
 }
 
-const LoginContainer = styled.div`
+const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

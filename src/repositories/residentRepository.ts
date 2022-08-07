@@ -18,5 +18,14 @@ async function findByEmail(email: string) {
   return prisma.resident.findFirst({ where: { email } });
 }
 
-const residentRepository = { register, findById, findByEmail };
+async function findByBuildingId(buildingId: number) {
+  return prisma.resident.findMany({ where: { buildingId } });
+}
+
+const residentRepository = {
+  register,
+  findById,
+  findByEmail,
+  findByBuildingId,
+};
 export default residentRepository;

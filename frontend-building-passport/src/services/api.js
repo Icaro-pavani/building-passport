@@ -8,5 +8,9 @@ function login(data) {
   return instance.post("/login", data);
 }
 
-const api = { login };
+function getBuildings() {
+  return instance.get("/buildings");
+}
+
+const api = { login, getBuildings };
 export default api;
