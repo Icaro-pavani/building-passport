@@ -76,6 +76,43 @@ export default function SignUpPage() {
     setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
+  function cpfMask(value) {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  }
+
+  function getResidents(buildingId) {
+    api
+      .getResidentsByBuildingId(buildingId)
+      .then(({ data }) => {
+        setResidents(data.residents);
+        setDisabled(!disabled);
+      })
+      .catch((error) => {
+        triggerModal();
+        setErrorMessage(error.response.data);
+      });
+  }
+
+  function signUpResident(event) {
+    event.preventDefault();
+    const residentData = { ...signUpInfo };
+    delete residentData.buildingId;
+    api
+      .signUpResident(residentData)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        triggerModal();
+        setErrorMessage(error.response.data);
+      });
+  }
+
   useEffect(() => {
     api
       .getBuildings()
@@ -91,7 +128,7 @@ export default function SignUpPage() {
   return buildings.length !== 0 ? (
     <SignUpContainer>
       <h1>Building Passport</h1>
-      <StyledForm>
+      <StyledForm onSubmit={signUpResident}>
         <TextField
           name="buildingId"
           sx={{ marginTop: "10px" }}
@@ -101,7 +138,7 @@ export default function SignUpPage() {
           onChange={(event) => {
             const { name, value } = event.target;
             setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
-            setDisabled(!disabled);
+            getResidents(value);
           }}
           value={signUpInfo.buildingId}
           required
@@ -126,9 +163,9 @@ export default function SignUpPage() {
           disabled={disabled}
           required
         >
-          {buildings.map((building) => (
-            <MenuItem key={building.id} value={building.id}>
-              {building.name}
+          {residents.map((resident) => (
+            <MenuItem key={resident.id} value={resident.id}>
+              {resident.name}
             </MenuItem>
           ))}
         </TextField>
@@ -138,7 +175,14 @@ export default function SignUpPage() {
           label="CPF"
           type="text"
           variant="outlined"
-          onChange={updateState}
+          onChange={(event) => {
+            const { name, value } = event.target;
+            setSignUpInfo((prevState) => ({
+              ...prevState,
+              [name]: cpfMask(value),
+            }));
+          }}
+          value={signUpInfo.cpf}
           required
         />
         <TextField
@@ -148,6 +192,7 @@ export default function SignUpPage() {
           type="email"
           variant="outlined"
           onChange={updateState}
+          value={signUpInfo.email}
           required
         />
         <TextField
@@ -157,6 +202,7 @@ export default function SignUpPage() {
           type="password"
           variant="outlined"
           onChange={updateState}
+          value={signUpInfo.password}
           required
         />
         <TextField
@@ -166,6 +212,7 @@ export default function SignUpPage() {
           type="password"
           variant="outlined"
           onChange={updateState}
+          value={signUpInfo.confirmPassword}
           required
         />
         <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">

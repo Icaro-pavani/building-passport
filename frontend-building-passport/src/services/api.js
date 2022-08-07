@@ -12,5 +12,13 @@ function getBuildings() {
   return instance.get("/buildings");
 }
 
-const api = { login, getBuildings };
+function getResidentsByBuildingId(buildignId) {
+  return instance.get(`/residents/${buildignId}`);
+}
+
+function signUpResident(data) {
+  return instance.post("/sign-up", data);
+}
+
+const api = { login, getBuildings, getResidentsByBuildingId, signUpResident };
 export default api;
