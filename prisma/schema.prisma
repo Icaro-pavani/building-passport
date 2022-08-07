@@ -59,7 +59,7 @@ model Resident {
   ResidentGuest ResidentGuest[]
 
   @@unique([cpf, buildingId], name: "residentIdentifier")
-  @@unique([email, buildingId])
+  @@unique([email, buildingId], name: "residentByEmail")
   @@map("residents")
 }
 

@@ -19,7 +19,7 @@ async function findByEmail(email: string) {
 }
 
 async function findByBuildingId(buildingId: number) {
-  return prisma.resident.findMany({ where: { buildingId } });
+  return prisma.resident.findMany({ where: { buildingId, isLiving: true } });
 }
 
 const residentRepository = {

@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Button, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import api from "../services/api";
+import { ResidentContext } from "../contexts/ResidentContext";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -81,6 +82,8 @@ export default function LoginPage() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const { resident, setResident } = useContext(ResidentContext);
+
   const navigate = useNavigate();
 
   function triggerModal() {
@@ -99,6 +102,7 @@ export default function LoginPage() {
       .login(loginInfo)
       .then(({ data }) => {
         localStorage.setItem("resident", JSON.stringify(data));
+        setResident({ ...data });
         navigate("/main");
       })
       .catch((error) => {
@@ -107,6 +111,12 @@ export default function LoginPage() {
         setDisabled(false);
       });
   }
+
+  useEffect(() => {
+    if (!!resident.token) {
+      navigate("/main");
+    }
+  }, [resident, navigate]);
 
   return (
     <LoginContainer>

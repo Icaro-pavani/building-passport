@@ -44,6 +44,13 @@ async function main() {
       buildingId: buildingRegistered.id,
       isLiving: true,
     },
+    {
+      name: "Fulano de tal",
+      cpf: "444.774.633-99",
+      apartment: "44B",
+      buildingId: buildingRegistered.id,
+      isLiving: false,
+    },
   ];
 
   residents.map(async (resident) => {
