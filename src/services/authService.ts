@@ -43,11 +43,12 @@ async function signUpResident(residentInfo: ResidentData) {
 
 async function loginResident(loginInfo: LoginData) {
   const registeredResident = await residentRepository.findByEmail(
-    loginInfo.email
+    loginInfo.email,
+    loginInfo.buildingId
   );
 
   if (!registeredResident) {
-    throw unprocessableError("Email not registerd!");
+    throw unprocessableError("Email not registered!");
   }
 
   if (!bcrypt.compareSync(loginInfo.password, registeredResident.password)) {

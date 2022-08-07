@@ -14,8 +14,10 @@ async function findById(id: number) {
   return prisma.resident.findUnique({ where: { id } });
 }
 
-async function findByEmail(email: string) {
-  return prisma.resident.findFirst({ where: { email } });
+async function findByEmail(email: string, buildingId: number) {
+  return prisma.resident.findUnique({
+    where: { residentByEmail: { email, buildingId } },
+  });
 }
 
 async function findByBuildingId(buildingId: number) {
