@@ -4,6 +4,9 @@ import dayjs from "dayjs";
 import Header from "../components/Header";
 import api from "../services/api";
 import { ResidentContext } from "../contexts/ResidentContext";
+import { Button } from "@mui/material";
+import FormatListNumberedTwoToneIcon from "@mui/icons-material/FormatListNumberedTwoTone";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   const [news, setNews] = useState([]);
@@ -11,6 +14,8 @@ export default function MainPage() {
   const [newsContent, setNewsContent] = useState({});
   const [openNews, setOpenNews] = useState(false);
   const { resident } = useContext(ResidentContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -73,6 +78,13 @@ export default function MainPage() {
             ))}
           </EventsContainer>
         )}
+        <Button
+          variant="contained"
+          endIcon={<FormatListNumberedTwoToneIcon />}
+          onClick={() => navigate("/create-list")}
+        >
+          Cadastrar Evento
+        </Button>
       </MainPageContainer>
     </>
   );
