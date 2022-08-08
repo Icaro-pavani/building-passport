@@ -40,7 +40,7 @@ model New {
   description String
   buildingId  Int
   building    Building @relation(fields: [buildingId], references: [id])
-  createAt    DateTime
+  createAt    DateTime @default(now())
 
   @@map("news")
 }
@@ -70,6 +70,8 @@ model List {
   resident      Resident        @relation(fields: [residentId], references: [id])
   numberGuests  Int
   ResidentGuest ResidentGuest[]
+  date          String
+  hour          String
 
   @@unique([title, residentId], name: "listIdentifier")
   @@map("lists")
@@ -87,14 +89,15 @@ model Guest {
 }
 
 model ResidentGuest {
-  id         Int      @id @default(autoincrement())
-  residentId Int
-  resident   Resident @relation(fields: [residentId], references: [id])
+  id         Int       @id @default(autoincrement())
   listId     Int
-  list       List     @relation(fields: [listId], references: [id])
+  list       List      @relation(fields: [listId], references: [id])
   guestId    Int
-  guest      Guest    @relation(fields: [guestId], references: [id])
-  confirmed  Boolean  @default(false)
+  guest      Guest     @relation(fields: [guestId], references: [id])
+  confirmed  Boolean   @default(false)
+  Resident   Resident? @relation(fields: [residentId], references: [id])
+  residentId Int?
 
+  @@unique([listId, guestId])
   @@map("residentGuests")
 }

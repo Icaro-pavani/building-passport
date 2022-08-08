@@ -7,6 +7,7 @@ import { ResidentContext } from "../contexts/ResidentContext";
 
 export default function MainPage() {
   const [news, setNews] = useState([]);
+  const [events, setEvents] = useState([]);
   const [newsContent, setNewsContent] = useState({});
   const [openNews, setOpenNews] = useState(false);
   const { resident } = useContext(ResidentContext);
@@ -16,6 +17,14 @@ export default function MainPage() {
       .getNews(resident.token)
       .then(({ data }) => {
         setNews(data.news);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    api
+      .getEvents(resident.token)
+      .then(({ data }) => {
+        setEvents([...data.lists]);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -50,6 +59,20 @@ export default function MainPage() {
           <p>{newsContent.description}</p>
         </NewsOpenContainer>
         <h2>Seus Eventos</h2>
+        {events.length === 0 ? (
+          <EventsContainer>
+            Você não possui eventos cadastrados ainda
+          </EventsContainer>
+        ) : (
+          <EventsContainer>
+            {events.map((event) => (
+              <li key={event.id}>
+                <p>{event.title}</p>
+                <p>{`${event.date}-${event.hour}`}</p>
+              </li>
+            ))}
+          </EventsContainer>
+        )}
       </MainPageContainer>
     </>
   );
@@ -72,4 +95,12 @@ const NewsContainer = styled.ul`
 const NewsOpenContainer = styled.div`
   border: 1px solid #000;
   display: ${(props) => (props.open ? "block" : "none")};
+`;
+
+const EventsContainer = styled.ul`
+  li {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
 `;

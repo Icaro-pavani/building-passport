@@ -29,11 +29,21 @@ function getNews(token) {
   return instance.get("/news", config);
 }
 
+function getEvents(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return instance.get("/lists", config);
+}
+
 const api = {
   login,
   getBuildings,
   getResidentsByBuildingId,
   signUpResident,
   getNews,
+  getEvents,
 };
 export default api;

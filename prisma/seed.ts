@@ -67,6 +67,14 @@ async function main() {
       create: resident,
     });
   });
+
+  await prisma.new.create({
+    data: {
+      title: "test test 1",
+      description: "Olha como teste funciona! É para a notícia aparecer aqui",
+      buildingId: 1,
+    },
+  });
 }
 
 main()
