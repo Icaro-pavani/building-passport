@@ -46,17 +46,16 @@ model New {
 }
 
 model Resident {
-  id            Int             @id @default(autoincrement())
-  name          String
-  cpf           String
-  email         String?
-  password      String?
-  apartment     String
-  buildingId    Int
-  building      Building        @relation(fields: [buildingId], references: [id])
-  isLiving      Boolean         @default(false)
-  List          List[]
-  ResidentGuest ResidentGuest[]
+  id         Int      @id @default(autoincrement())
+  name       String
+  cpf        String
+  email      String?
+  password   String?
+  apartment  String
+  buildingId Int
+  building   Building @relation(fields: [buildingId], references: [id])
+  isLiving   Boolean  @default(false)
+  List       List[]
 
   @@unique([cpf, buildingId], name: "residentIdentifier")
   @@unique([email, buildingId], name: "residentByEmail")
@@ -64,39 +63,37 @@ model Resident {
 }
 
 model List {
-  id            Int             @id @default(autoincrement())
-  title         String
-  residentId    Int
-  resident      Resident        @relation(fields: [residentId], references: [id])
-  numberGuests  Int
-  ResidentGuest ResidentGuest[]
-  date          String
-  hour          String
+  id           Int         @id @default(autoincrement())
+  title        String
+  residentId   Int
+  resident     Resident    @relation(fields: [residentId], references: [id])
+  numberGuests Int
+  listGuest    ListGuest[]
+  date         String
+  hour         String
 
   @@unique([title, residentId], name: "listIdentifier")
   @@map("lists")
 }
 
 model Guest {
-  id            Int             @id @default(autoincrement())
-  name          String
-  email         String          @unique
-  cpf           String?         @unique
-  cel           String?         @unique
-  ResidentGuest ResidentGuest[]
+  id        Int         @id @default(autoincrement())
+  name      String
+  email     String      @unique
+  cpf       String?     @unique
+  cel       String?     @unique
+  listGuest ListGuest[]
 
   @@map("guests")
 }
 
-model ResidentGuest {
-  id         Int       @id @default(autoincrement())
-  listId     Int
-  list       List      @relation(fields: [listId], references: [id])
-  guestId    Int
-  guest      Guest     @relation(fields: [guestId], references: [id])
-  confirmed  Boolean   @default(false)
-  Resident   Resident? @relation(fields: [residentId], references: [id])
-  residentId Int?
+model ListGuest {
+  id        Int     @id @default(autoincrement())
+  listId    Int
+  list      List    @relation(fields: [listId], references: [id])
+  guestId   Int
+  guest     Guest   @relation(fields: [guestId], references: [id])
+  confirmed Boolean @default(false)
 
   @@unique([listId, guestId])
   @@map("residentGuests")
