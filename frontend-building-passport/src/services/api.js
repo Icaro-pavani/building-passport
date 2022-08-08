@@ -20,5 +20,20 @@ function signUpResident(data) {
   return instance.post("/sign-up", data);
 }
 
-const api = { login, getBuildings, getResidentsByBuildingId, signUpResident };
+function getNews(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return instance.get("/news", config);
+}
+
+const api = {
+  login,
+  getBuildings,
+  getResidentsByBuildingId,
+  signUpResident,
+  getNews,
+};
 export default api;
