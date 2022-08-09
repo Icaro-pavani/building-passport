@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateResidentRoute from "./components/PrivateResidentRoute";
 import { ResidentProvider } from "./contexts/ResidentContext";
+import AddListPage from "./pages/AddListPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -10,8 +11,8 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ResidentProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <ResidentProvider>
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
@@ -23,9 +24,17 @@ function App() {
                 </PrivateResidentRoute>
               }
             />
+            <Route
+              path="/create-list"
+              element={
+                <PrivateResidentRoute>
+                  <AddListPage />
+                </PrivateResidentRoute>
+              }
+            />
           </Routes>
-        </BrowserRouter>
-      </ResidentProvider>
+        </ResidentProvider>
+      </BrowserRouter>
     </>
   );
 }

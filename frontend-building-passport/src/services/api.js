@@ -38,6 +38,15 @@ function getEvents(token) {
   return instance.get("/lists", config);
 }
 
+function addNewList(token, data) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return instance.post("/lists", data, config);
+}
+
 const api = {
   login,
   getBuildings,
@@ -45,5 +54,6 @@ const api = {
   signUpResident,
   getNews,
   getEvents,
+  addNewList,
 };
 export default api;

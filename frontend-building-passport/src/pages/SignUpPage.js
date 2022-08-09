@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import api from "../services/api";
+import Masks from "../utils/masks";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -74,15 +75,6 @@ export default function SignUpPage() {
   function updateState(event) {
     const { name, value } = event.target;
     setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
-  }
-
-  function cpfMask(value) {
-    return value
-      .replace(/\D/g, "")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
-      .replace(/(-\d{2})\d+?$/, "$1");
   }
 
   function getResidents(buildingId) {
@@ -179,7 +171,7 @@ export default function SignUpPage() {
             const { name, value } = event.target;
             setSignUpInfo((prevState) => ({
               ...prevState,
-              [name]: cpfMask(value),
+              [name]: Masks.cpfMask(value),
             }));
           }}
           value={signUpInfo.cpf}
