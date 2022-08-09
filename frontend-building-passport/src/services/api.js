@@ -47,6 +47,15 @@ function addNewList(token, data) {
   return instance.post("/lists", data, config);
 }
 
+function getOneList(token, id) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return instance.get(`/lists/${id}`, config);
+}
+
 const api = {
   login,
   getBuildings,
@@ -55,5 +64,6 @@ const api = {
   getNews,
   getEvents,
   addNewList,
+  getOneList,
 };
 export default api;

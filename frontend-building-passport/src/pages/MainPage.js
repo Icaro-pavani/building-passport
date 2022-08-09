@@ -71,7 +71,7 @@ export default function MainPage() {
         ) : (
           <EventsContainer>
             {events.map((event) => (
-              <li key={event.id}>
+              <li key={event.id} onClick={() => navigate(`/list/${event.id}`)}>
                 <p>{event.title}</p>
                 <p>{`${event.date}-${event.hour}`}</p>
               </li>

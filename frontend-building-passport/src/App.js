@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateResidentRoute from "./components/PrivateResidentRoute";
 import { ResidentProvider } from "./contexts/ResidentContext";
 import AddListPage from "./pages/AddListPage";
+import ListDetailPage from "./pages/ListDetailPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -29,6 +30,14 @@ function App() {
               element={
                 <PrivateResidentRoute>
                   <AddListPage />
+                </PrivateResidentRoute>
+              }
+            />
+            <Route
+              path="/list/:id"
+              element={
+                <PrivateResidentRoute>
+                  <ListDetailPage />
                 </PrivateResidentRoute>
               }
             />
