@@ -18,3 +18,12 @@ export async function addNewList(req: Request, res: Response) {
 
   res.sendStatus(201);
 }
+
+export async function getOneList(req: Request, res: Response) {
+  const resident: Resident = res.locals.resident;
+  const listId: number = parseInt(req.params.id);
+
+  const list = await listService.obtainOneList(resident.id, listId);
+
+  res.status(200).send({ list });
+}

@@ -80,7 +80,7 @@ function sendEmail(
     html: `
       <p>${residentName} gostaria de convidar para a/o <strong>${list.title}</strong> que acontecerá no dia ${list.date} às ${list.hour}.</p>
       <p>Endereço: ${building.name} (${building.street}, ${building.number} - ${building.district} - ${building.city}/${building.state}).</p>
-      <p>Para confirmar sua participação e poder acessar o condomínio acesse <a href="http://localhost:5000/guests?code=${token}" target="_blank">aqui</a>.</p>
+      <p>Para confirmar sua participação e poder acessar o condomínio acesse <a href="http://localhost:3000/guests?code=${token}" target="_blank">aqui</a>.</p>
       `,
   };
 
@@ -90,5 +90,14 @@ function sendEmail(
     .catch((error) => console.log(error));
 }
 
-const listService = { getAllResidentList, addList };
+async function obtainOneList(residentId: number, listId: number) {
+  const list = await listRepository.findOneById(listId);
+  if (list.residentId !== residentId) {
+    throw conflictError("The event doesn't belong to this resident!");
+  }
+
+  return list;
+}
+
+const listService = { getAllResidentList, addList, obtainOneList };
 export default listService;

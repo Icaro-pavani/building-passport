@@ -4,7 +4,26 @@ import { prisma } from "../config/database.js";
 export type AddListData = Omit<List, "id" | "residentId">;
 
 async function findAllListsByResidentId(residentId: number) {
-  return prisma.list.findMany({ where: { residentId } });
+  return prisma.list.findMany({
+    orderBy: [{ id: "desc" }],
+    where: { residentId },
+    include: {
+      listGuest: {
+        select: { guest: {} },
+      },
+    },
+  });
+}
+
+async function findOneById(id: number) {
+  return prisma.list.findUnique({
+    where: { id },
+    include: {
+      listGuest: {
+        include: { guest: {} },
+      },
+    },
+  });
 }
 
 async function addNewList(residentId: number, listInfo: AddListData) {
@@ -34,5 +53,6 @@ const listRepository = {
   addNewList,
   findListByNameAndResidentId,
   createListGuestRelations,
+  findOneById,
 };
 export default listRepository;
