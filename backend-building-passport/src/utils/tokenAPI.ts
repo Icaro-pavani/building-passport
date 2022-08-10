@@ -9,14 +9,19 @@ export type TokenDecrypt = {
 export type GuestTokenDecrypt = {
   listId: number;
   guestId: number;
+  buildingId: number;
 };
 
 function generateToken(id: number) {
   return jwt.sign({ id }, secretKey);
 }
 
-function generateGuestToken(listId: number, guestId: number) {
-  return jwt.sign({ listId, guestId }, secretKey);
+function generateGuestToken(
+  listId: number,
+  guestId: number,
+  buildingId: number
+) {
+  return jwt.sign({ listId, guestId, buildingId }, secretKey);
 }
 
 async function decryptToken(token: string) {

@@ -9,6 +9,7 @@ import { ListData } from "../schemas/listSchema.js";
 import tokenAPI from "../utils/tokenAPI.js";
 import sgMail from "@sendgrid/mail";
 import buildingRepository from "../repositories/buildingRepository.js";
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function getAllResidentList(residentId: number) {
@@ -53,7 +54,11 @@ async function addList(resident: Resident, listInfo: ListData) {
 
   let listGuestRelations: { listId: number; guestId: number }[] = [];
   for (let i = 0; i < listInfo.numberGuests; i++) {
-    const token = tokenAPI.generateGuestToken(createdList.id, guests[i].id);
+    const token = tokenAPI.generateGuestToken(
+      createdList.id,
+      guests[i].id,
+      building.id
+    );
     listGuestRelations.push({ listId: createdList.id, guestId: guests[i].id });
     sendEmail(guests[i], building, createdList, resident.name, token);
   }
