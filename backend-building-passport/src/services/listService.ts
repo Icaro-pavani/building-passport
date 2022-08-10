@@ -53,7 +53,7 @@ async function addList(resident: Resident, listInfo: ListData) {
 
   let listGuestRelations: { listId: number; guestId: number }[] = [];
   for (let i = 0; i < listInfo.numberGuests; i++) {
-    const token = tokenAPI.generateToken(guests[i].id);
+    const token = tokenAPI.generateGuestToken(createdList.id, guests[i].id);
     listGuestRelations.push({ listId: createdList.id, guestId: guests[i].id });
     sendEmail(guests[i], building, createdList, resident.name, token);
   }
