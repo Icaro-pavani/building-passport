@@ -5,6 +5,7 @@ import AddListPage from "./pages/AddListPage";
 import ListDetailPage from "./pages/ListDetailPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
+import QRCodePage from "./pages/QRCodePage";
 import SignUpPage from "./pages/SignUpPage";
 import GlobalStyle from "./theme/GlobalStyle";
 
@@ -41,6 +42,7 @@ function App() {
                 </PrivateResidentRoute>
               }
             />
+            <Route path="/qrcode" element={<QRCodePage />} />
           </Routes>
         </ResidentProvider>
       </BrowserRouter>
