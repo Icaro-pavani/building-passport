@@ -8,5 +8,9 @@ async function findBuildingById(id: number) {
   return prisma.building.findUnique({ where: { id } });
 }
 
-const buildingRepository = { findAll, findBuildingById };
+async function findBuildingIdByKey(key: string) {
+  return prisma.buildingKey.findUnique({ where: { key } });
+}
+
+const buildingRepository = { findAll, findBuildingById, findBuildingIdByKey };
 export default buildingRepository;
