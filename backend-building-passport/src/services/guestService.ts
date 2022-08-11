@@ -1,5 +1,6 @@
 import QRCode from "qrcode";
 import sgMail from "@sendgrid/mail";
+import Cryptr from "cryptr";
 import { unprocessableError } from "../middlewares/handleErrorsMiddleware.js";
 import guestRepository from "../repositories/guestRepository.js";
 import { GuestUpdateData } from "../schemas/guestSchema.js";
@@ -9,9 +10,13 @@ import { Building, Guest, List } from "@prisma/client";
 import listRepository from "../repositories/listRepository.js";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const cryptr = new Cryptr(process.env.CRYPTRKEY);
 
 async function getGuestListInfo(guestToken: string) {
   const { guestListInfo } = await checkGuestToken(guestToken);
+  if (!!guestListInfo.guest.cpf) {
+    guestListInfo.guest.cpf = cryptr.decrypt(guestListInfo.guest.cpf);
+  }
 
   return guestListInfo;
 }
@@ -22,6 +27,7 @@ async function confirmAndUpdateGuest(
 ) {
   const { guestListInfo, building } = await checkGuestToken(guestToken);
   const { listId, guestId } = guestListInfo;
+  guestInfo.cpf = cryptr.encrypt(guestInfo.cpf);
   await guestRepository.updateGuestInfo(guestId, guestInfo);
   await guestRepository.updateListConfirmation(listId, guestId);
   const QrcodeData = JSON.stringify({
@@ -32,13 +38,9 @@ async function confirmAndUpdateGuest(
 
   const list = await listRepository.findOneById(listId);
 
-  QRCode.toDataURL(QrcodeData)
-    .then((url) => {
-      sendEmail(guestListInfo.guest, building, list, url);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const qrcode = await QRCode.toDataURL(QrcodeData);
+  sendEmail(guestListInfo.guest, building, list, qrcode);
+  return qrcode;
 }
 
 async function checkGuestToken(token: string) {
@@ -67,7 +69,7 @@ function sendEmail(guest: Guest, building: Building, list: List, url: string) {
     html: `
         <p>Você confirmou sua presença para a/o <strong>${list.title}</strong> que acontecerá no dia ${list.date} às ${list.hour}.</p>
         <p>Endereço: ${building.name} (${building.street}, ${building.number} - ${building.district} - ${building.city}/${building.state}).</p>
-        <p>Você conseguirá liberar a portaria para acesso ao condomínio, por meio desse <a href="http://localhost:3000/qrcode?src=${url}" target="_blank">QRCode</a>, uma única vez no dia do evento.</p>
+        <p>Você conseguirá liberar a portaria para acesso ao condomínio, por meio desse <a href="${process.env.FRONT_URL}/qrcode?src=${url}" target="_blank">QRCode</a>, uma única vez no dia do evento.</p>
         `,
   };
 

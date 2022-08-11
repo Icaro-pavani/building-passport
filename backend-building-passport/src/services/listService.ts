@@ -85,7 +85,7 @@ function sendEmail(
     html: `
       <p>${residentName} gostaria de convidar para a/o <strong>${list.title}</strong> que acontecerá no dia ${list.date} às ${list.hour}.</p>
       <p>Endereço: ${building.name} (${building.street}, ${building.number} - ${building.district} - ${building.city}/${building.state}).</p>
-      <p>Para confirmar sua participação e poder acessar o condomínio acesse <a href="http://localhost:3000/guests?code=${token}" target="_blank">aqui</a>.</p>
+      <p>Para confirmar sua participação e poder acessar o condomínio acesse <a href="${process.env.FRONT_URL}/guests?code=${token}" target="_blank">aqui</a>.</p>
       `,
   };
 

@@ -20,7 +20,10 @@ export async function confirmGuest(req: Request, res: Response) {
     throw unprocessableError("Missing Token!");
   }
 
-  await guestService.confirmAndUpdateGuest(guestToken, guestInfo);
+  const qrcode = await guestService.confirmAndUpdateGuest(
+    guestToken,
+    guestInfo
+  );
 
-  res.sendStatus(200);
+  res.status(200).send({ qrcode });
 }
