@@ -1,5 +1,6 @@
 import { Resident } from "@prisma/client";
 import { Request, Response } from "express";
+import { unprocessableError } from "../middlewares/handleErrorsMiddleware.js";
 import { ListData } from "../schemas/listSchema.js";
 import listService from "../services/listService.js";
 
@@ -22,6 +23,10 @@ export async function addNewList(req: Request, res: Response) {
 export async function getOneList(req: Request, res: Response) {
   const resident: Resident = res.locals.resident;
   const listId: number = parseInt(req.params.id);
+
+  if (!listId) {
+    throw unprocessableError("Invalid Id!");
+  }
 
   const list = await listService.obtainOneList(resident.id, listId);
 

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addNewsToBuilding,
+  deleteNewsFromBuilding,
   getNewsByBuilding,
   getNewsByResident,
 } from "../controllers/newsController.js";
@@ -19,5 +20,6 @@ newsRouter.post(
   validSchema(newsSchema),
   addNewsToBuilding
 );
+newsRouter.delete("/news/:id", validBuildingToken, deleteNewsFromBuilding);
 
 export default newsRouter;

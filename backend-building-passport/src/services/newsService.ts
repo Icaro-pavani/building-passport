@@ -11,5 +11,9 @@ async function addNews(buildingId: number, newsInfo: NewsData) {
   await newsRepository.insert(newsData);
 }
 
-const newsService = { getAllNewsByBuildingId, addNews };
+async function deleteNews(newsId: number) {
+  await newsRepository.remove(newsId);
+}
+
+const newsService = { getAllNewsByBuildingId, addNews, deleteNews };
 export default newsService;

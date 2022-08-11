@@ -1,5 +1,6 @@
 import { Building, Resident } from "@prisma/client";
 import { Request, Response } from "express";
+import { unprocessableError } from "../middlewares/handleErrorsMiddleware.js";
 import { NewsData } from "../schemas/newsSchema.js";
 import newsService from "../services/newsService.js";
 
@@ -24,4 +25,15 @@ export async function addNewsToBuilding(req: Request, res: Response) {
   await newsService.addNews(building.id, newsInfo);
 
   res.sendStatus(201);
+}
+
+export async function deleteNewsFromBuilding(req: Request, res: Response) {
+  const newsId: number = parseInt(req.params.id);
+  if (!newsId) {
+    throw unprocessableError("Invalid Id!");
+  }
+
+  await newsService.deleteNews(newsId);
+
+  res.sendStatus(200);
 }
