@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateResidentRoute from "./components/PrivateResidentRoute";
 import { ResidentProvider } from "./contexts/ResidentContext";
 import AddListPage from "./pages/AddListPage";
+import GuestInfoPage from "./pages/GuestInfoPage";
 import ListDetailPage from "./pages/ListDetailPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
@@ -42,6 +43,7 @@ function App() {
                 </PrivateResidentRoute>
               }
             />
+            <Route path="/guests" element={<GuestInfoPage />} />
             <Route path="/qrcode" element={<QRCodePage />} />
           </Routes>
         </ResidentProvider>

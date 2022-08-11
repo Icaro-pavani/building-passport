@@ -56,6 +56,24 @@ function getOneList(token, id) {
   return instance.get(`/lists/${id}`, config);
 }
 
+function getGuestInfo(guestToken) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${guestToken}`,
+    },
+  };
+  return instance.get("/guest", config);
+}
+
+function confirmGuest(guestToken, data) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${guestToken}`,
+    },
+  };
+  return instance.post("/guest", data, config);
+}
+
 const api = {
   login,
   getBuildings,
@@ -65,5 +83,7 @@ const api = {
   getEvents,
   addNewList,
   getOneList,
+  getGuestInfo,
+  confirmGuest,
 };
 export default api;

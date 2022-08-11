@@ -242,7 +242,7 @@ export default function AddListPage() {
           contentLabel="Error Message"
           style={modalStyles}
         >
-          <h2 style={h2ModalStyle}>Login Inválido!</h2>
+          <h2 style={h2ModalStyle}>Criação Inválida!</h2>
           <h3 style={h3ModalStyle}>{errorMessage}</h3>
           <button style={buttonModalStyle} onClick={triggerModal}>
             Ok

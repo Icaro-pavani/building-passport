@@ -157,6 +157,7 @@ export default function LoginPage() {
           variant="outlined"
           disabled={disabled}
           onChange={updateState}
+          value={loginInfo.email}
           required
         />
         <TextField
@@ -167,6 +168,7 @@ export default function LoginPage() {
           variant="outlined"
           disabled={disabled}
           onChange={updateState}
+          value={loginInfo.password}
           required
         />
         <Button

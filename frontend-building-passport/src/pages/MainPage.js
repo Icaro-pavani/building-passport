@@ -54,7 +54,7 @@ export default function MainPage() {
                 }}
               >
                 <p>{dayjs(news.createAt).format("DD/MM")}</p>
-                <p>news.title</p>
+                <p>{news.title}</p>
               </li>
             ))}
           </NewsContainer>
