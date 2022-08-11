@@ -1,8 +1,12 @@
 import residentRepository from "../repositories/residentRepository.js";
 
-async function getAllResidents(buildingId: number) {
+async function getAllLivingResidents(buildingId: number) {
   return await residentRepository.findByBuildingId(buildingId);
 }
 
-const residentService = { getAllResidents };
+async function getAllBuildingResidents(buildingId: number) {
+  return await residentRepository.findAllResidentsByBuildingId(buildingId);
+}
+
+const residentService = { getAllLivingResidents, getAllBuildingResidents };
 export default residentService;

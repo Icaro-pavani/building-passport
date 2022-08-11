@@ -24,10 +24,18 @@ async function findByBuildingId(buildingId: number) {
   return prisma.resident.findMany({ where: { buildingId, isLiving: true } });
 }
 
+async function findAllResidentsByBuildingId(buildingId: number) {
+  return prisma.resident.findMany({
+    orderBy: [{ name: "asc" }],
+    where: { buildingId },
+  });
+}
+
 const residentRepository = {
   register,
   findById,
   findByEmail,
   findByBuildingId,
+  findAllResidentsByBuildingId,
 };
 export default residentRepository;
