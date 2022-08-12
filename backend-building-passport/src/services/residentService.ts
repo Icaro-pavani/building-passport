@@ -21,9 +21,19 @@ async function addNewResident(
   await residentRepository.insert(addResidentData);
 }
 
+async function updateStatus(residentId: number, isLiving: boolean) {
+  await residentRepository.updateStatus(isLiving, residentId);
+}
+
+async function deleteResident(residentId: number) {
+  await residentRepository.remove(residentId);
+}
+
 const residentService = {
   getAllLivingResidents,
   getAllBuildingResidents,
   addNewResident,
+  updateStatus,
+  deleteResident,
 };
 export default residentService;

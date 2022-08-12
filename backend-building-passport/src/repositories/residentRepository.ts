@@ -40,6 +40,17 @@ async function insert(residentInfo: AddResidentInfo) {
   });
 }
 
+async function updateStatus(isLiving: boolean, id: number) {
+  return prisma.resident.update({
+    where: { id },
+    data: { isLiving },
+  });
+}
+
+async function remove(id: number) {
+  return prisma.resident.delete({ where: { id } });
+}
+
 const residentRepository = {
   register,
   findById,
@@ -47,5 +58,7 @@ const residentRepository = {
   findByBuildingId,
   findAllResidentsByBuildingId,
   insert,
+  updateStatus,
+  remove,
 };
 export default residentRepository;
