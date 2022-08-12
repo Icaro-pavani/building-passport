@@ -5,6 +5,7 @@ import { BuildingProvider } from "./contexts/BuildingContext";
 import { ResidentProvider } from "./contexts/ResidentContext";
 import AddListPage from "./pages/AddListPage";
 import BuildingLoginPage from "./pages/BuildingLoginPage";
+import BuildingNewsPage from "./pages/BuildingNewsPage";
 import BuildingResidentsPage from "./pages/BuildingResidentsPage";
 import GuestInfoPage from "./pages/GuestInfoPage";
 import ListDetailPage from "./pages/ListDetailPage";
@@ -59,6 +60,14 @@ function App() {
               element={
                 <PrivateBuildingRoute>
                   <BuildingResidentsPage />
+                </PrivateBuildingRoute>
+              }
+            />
+            <Route
+              path="/building/news"
+              element={
+                <PrivateBuildingRoute>
+                  <BuildingNewsPage />
                 </PrivateBuildingRoute>
               }
             />

@@ -114,6 +114,33 @@ function addNewResident(buildingToken, data) {
   return instance.post("/residents", data, config);
 }
 
+function getNewsFromBuilding(buildingToken) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.get("/buildings/news", config);
+}
+
+function deleteNews(buildingToken, id) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.delete(`/news/${id}`, config);
+}
+
+function addBuildingNews(buildingToken, data) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.post("/news", data, config);
+}
+
 const api = {
   login,
   getBuildings,
@@ -129,6 +156,9 @@ const api = {
   getAllBuildingsResidents,
   updateResidentStatus,
   deleteResident,
-  addNewResident
+  addNewResident,
+  getNewsFromBuilding,
+  deleteNews,
+  addBuildingNews,
 };
 export default api;

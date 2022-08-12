@@ -1,13 +1,12 @@
 import { Button, TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import ResidentInfo from "../components/ResidentInfo";
 import { BuildingContext } from "../contexts/BuildingContext";
 import api from "../services/api";
-import Masks from "../utils/masks";
 import Modal from "react-modal";
 import BuildingHeader from "../components/BuildingHeader";
 import { useNavigate } from "react-router-dom";
+import NewsInfo from "../components/NewsInfo";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -54,13 +53,12 @@ const buttonModalStyle = {
   fontFamily: `"Recursive", sans-serif`,
 };
 
-export default function BuildingResidentsPage() {
+export default function BuildingNewsPage() {
   const { building } = useContext(BuildingContext);
-  const [residents, setResidents] = useState([]);
-  const [residentInfo, setResidentInfo] = useState({
-    name: "",
-    cpf: "",
-    apartment: "",
+  const [news, setNews] = useState([]);
+  const [newsInfo, setNewsInfo] = useState({
+    title: "",
+    description: "",
   });
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -74,28 +72,27 @@ export default function BuildingResidentsPage() {
 
   useEffect(() => {
     api
-      .getAllBuildingsResidents(building.token)
+      .getNewsFromBuilding(building.token)
       .then(({ data }) => {
-        setResidents([...data.residents]);
+        setNews([...data.news]);
       })
       .catch((error) => console.log(error.response.data));
   }, [building, loading]);
 
   function updateState(event) {
     const { name, value } = event.target;
-    setResidentInfo((prevState) => ({ ...prevState, [name]: value }));
+    setNewsInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  function registerResident(event) {
+  function addNews(event) {
     event.preventDefault();
     api
-      .addNewResident(building.token, residentInfo)
+      .addBuildingNews(building.token, newsInfo)
       .then(() => {
         setLoading(!loading);
-        setResidentInfo({
-          name: "",
-          cpf: "",
-          apartment: "",
+        setNewsInfo({
+          title: "",
+          description: "",
         });
       })
       .catch((error) => {
@@ -105,75 +102,58 @@ export default function BuildingResidentsPage() {
   }
 
   return (
-    <BuildingResidentContainer>
-      <ResidentContainer>
+    <BuildingNewsContainer>
+      <NewsContainer>
         <BuildingHeader />
         <Button
           variant="contained"
           type="button"
-          onClick={() => navigate("/building/news")}
+          onClick={() => navigate("/building/residents")}
         >
-          Ir para notícias
+          Ir para residentes
         </Button>
-        <StyledForm onSubmit={registerResident}>
+        <StyledForm onSubmit={addNews}>
           <TextField
-            name="name"
+            name="title"
             sx={{ marginTop: "10px" }}
-            label="Nome completo"
+            label="Título"
             type="text"
             variant="outlined"
             onChange={updateState}
-            value={residentInfo.name}
+            value={newsInfo.title}
             required
           />
           <TextField
-            name="cpf"
+            name="description"
             sx={{ marginTop: "10px" }}
-            label="CPF"
-            type="text"
-            variant="outlined"
-            onChange={(event) => {
-              const { name, value } = event.target;
-              setResidentInfo((prevState) => ({
-                ...prevState,
-                [name]: Masks.cpfMask(value),
-              }));
-            }}
-            value={residentInfo.cpf}
-            required
-          />
-          <TextField
-            name="apartment"
-            sx={{ marginTop: "10px" }}
-            label="Apartamento"
+            label="Corpo da notícia"
             type="text"
             variant="outlined"
             onChange={updateState}
-            value={residentInfo.email}
+            value={newsInfo.description}
             required
           />
           <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
             Adicionar
           </Button>
         </StyledForm>
-        {residents.length === 0 ? (
+        {news.length === 0 ? (
           <h3>Não há residentes!</h3>
         ) : (
           <>
-            {residents.map(({ id, name, apartment, isLiving }) => (
-              <ResidentInfo
+            {news.map(({ id, title, createAt }) => (
+              <NewsInfo
                 key={id}
                 id={id}
-                name={name}
-                apartment={apartment}
-                isLiving={isLiving}
+                title={title}
+                createAt={createAt}
                 setLoading={setLoading}
                 loading={loading}
               />
             ))}
           </>
         )}
-      </ResidentContainer>
+      </NewsContainer>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={triggerModal}
@@ -186,11 +166,11 @@ export default function BuildingResidentsPage() {
           Ok
         </button>
       </Modal>
-    </BuildingResidentContainer>
+    </BuildingNewsContainer>
   );
 }
 
-const BuildingResidentContainer = styled.div`
+const BuildingNewsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -203,4 +183,4 @@ const StyledForm = styled.form`
   align-items: center;
 `;
 
-const ResidentContainer = styled.ul``;
+const NewsContainer = styled.ul``;
