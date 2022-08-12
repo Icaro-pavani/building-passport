@@ -75,7 +75,7 @@ export default function BuildingLoginPage() {
     api
       .loginBuilding(apiKey)
       .then(({ data }) => {
-        setBuilding({ token: data.token });
+        setBuilding({ token: data.buildingToken });
         navigate("/building/residents");
       })
       .catch((error) => {

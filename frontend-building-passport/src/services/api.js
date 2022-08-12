@@ -78,6 +78,42 @@ function loginBuilding(data) {
   return instance.post("/buildings", data);
 }
 
+function getAllBuildingsResidents(buildingToken) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.get("/residents", config);
+}
+
+function updateResidentStatus(buildingToken, id, data) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.post(`/status/residents/${id}`, data, config);
+}
+
+function deleteResident(buildingToken, id) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.delete(`/delete/residents/${id}`, config);
+}
+
+function addNewResident(buildingToken, data) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${buildingToken}`,
+    },
+  };
+  return instance.post("/residents", data, config);
+}
+
 const api = {
   login,
   getBuildings,
@@ -90,5 +126,9 @@ const api = {
   getGuestInfo,
   confirmGuest,
   loginBuilding,
+  getAllBuildingsResidents,
+  updateResidentStatus,
+  deleteResident,
+  addNewResident
 };
 export default api;
