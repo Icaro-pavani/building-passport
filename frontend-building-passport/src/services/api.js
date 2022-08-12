@@ -74,6 +74,10 @@ function confirmGuest(guestToken, data) {
   return instance.post("/guest", data, config);
 }
 
+function loginBuilding(data) {
+  return instance.post("/buildings", data);
+}
+
 const api = {
   login,
   getBuildings,
@@ -85,5 +89,6 @@ const api = {
   getOneList,
   getGuestInfo,
   confirmGuest,
+  loginBuilding,
 };
 export default api;

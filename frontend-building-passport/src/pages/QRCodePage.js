@@ -14,7 +14,7 @@ export default function QRCodePage() {
       <GuestHeader />
       <img src={image} alt="qrcode" />
       <h1>
-        Sua presença já foi confirmada! Utilize o QRCode acima para acesso!{" "}
+        Sua presença já foi confirmada! Utilize o QRCode acima para acesso!
       </h1>
       <h2>Um e-mail foi enviado com o link para acesso a este QRCode.</h2>
     </QRCodeContainer>
