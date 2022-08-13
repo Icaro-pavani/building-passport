@@ -76,7 +76,7 @@ function sendEmail(
   const message = {
     to: guest.email,
     from: process.env.SENDER_EMAIL,
-    subject: `Buildgin Passport - Você foi Convidado para o/a ${list.title}`,
+    subject: `Building Passport - Você foi Convidado para o/a ${list.title}`,
     text: `
       ${residentName} gostaria de convidar para a/o ${list.title} que acontecerá no dia ${list.date} às ${list.hour}.
       Endereço: ${building.name} (${building.street}, ${building.number} - ${building.district} - ${building.city}/${building.state})

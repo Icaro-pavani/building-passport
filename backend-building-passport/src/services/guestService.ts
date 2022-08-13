@@ -65,7 +65,7 @@ function sendEmail(guest: Guest, building: Building, list: List, url: string) {
   const message = {
     to: guest.email,
     from: process.env.SENDER_EMAIL,
-    subject: `Buildgin Passport - Confirmação de presença para o/a ${list.title}`,
+    subject: `Building Passport - Confirmação de presença para o/a ${list.title}`,
     html: `
         <p>Você confirmou sua presença para a/o <strong>${list.title}</strong> que acontecerá no dia ${list.date} às ${list.hour}.</p>
         <p>Endereço: ${building.name} (${building.street}, ${building.number} - ${building.district} - ${building.city}/${building.state}).</p>
