@@ -1,5 +1,4 @@
 import { jest } from "@jest/globals";
-import QRCode from "qrcode";
 import sgMail from "@sendgrid/mail";
 import buildingRepository from "../../src/repositories/buildingRepository.js";
 import guestRepository from "../../src/repositories/guestRepository.js";

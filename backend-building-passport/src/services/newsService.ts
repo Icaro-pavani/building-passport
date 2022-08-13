@@ -1,4 +1,4 @@
-import newsRepository from "../repositories/newsRespository.js";
+import newsRepository from "../repositories/newsRepository.js";
 import { NewsData } from "../schemas/newsSchema.js";
 
 async function getAllNewsByBuildingId(buildingId: number) {
