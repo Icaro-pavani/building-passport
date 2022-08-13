@@ -23,7 +23,7 @@ async function signUpResident(residentInfo: ResidentData) {
   }
 
   if (residentInfo.password !== residentInfo.confirmPassword) {
-    unprocessableError("The password confirmation doesn't match!");
+    throw unprocessableError("The password confirmation doesn't match!");
   }
 
   if (!registeredResident.isLiving) {
