@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import api from "../services/api";
 import Masks from "../utils/masks";
+import Logo from "../assets/Logo.png";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -26,6 +27,7 @@ const modalStyles = {
   },
   overlay: {
     backgroundColor: "rgba(0.5, 0.5,0.5, 0.6)",
+    zIndex: 3,
   },
 };
 
@@ -41,10 +43,10 @@ const h3ModalStyle = {
 
 const buttonModalStyle = {
   fontSize: "18px",
-  backgroundColor: "#9bfbb0",
+  backgroundColor: "var(--button-color)",
   width: "250px",
   height: "40px",
-  border: "3px solid #9BFBB0",
+  border: "3px solid var(--button-color)",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
   borderRadius: "5px",
   margin: "0 auto",
@@ -119,7 +121,7 @@ export default function SignUpPage() {
 
   return buildings.length !== 0 ? (
     <SignUpContainer>
-      <h1>Building Passport</h1>
+      <img src={Logo} alt="logo" />
       <StyledForm onSubmit={signUpResident}>
         <TextField
           name="buildingId"
@@ -207,7 +209,11 @@ export default function SignUpPage() {
           value={signUpInfo.confirmPassword}
           required
         />
-        <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
+        <Button
+          variant="contained"
+          sx={{ marginTop: "20px", backgroundColor: "var(--button-color)" }}
+          type="submit"
+        >
           Cadastrar
         </Button>
       </StyledForm>
@@ -234,6 +240,10 @@ const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  img {
+    height: 180px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -241,4 +251,6 @@ const StyledForm = styled.form`
   flex-direction: column;
 `;
 
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  margin-top: 30px;
+`;

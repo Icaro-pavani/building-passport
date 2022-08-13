@@ -132,6 +132,7 @@ const GlobalStyle = createGlobalStyle`
 
     * {
         box-sizing: border-box;
+        --button-color: #00a5e9;
     }
 
     html,

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import api from "../services/api";
 import { ResidentContext } from "../contexts/ResidentContext";
+import Logo from "../assets/Logo.png";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -48,6 +49,7 @@ const modalStyles = {
   },
   overlay: {
     backgroundColor: "rgba(0.5, 0.5,0.5, 0.6)",
+    zIndex: 3,
   },
 };
 
@@ -63,10 +65,10 @@ const h3ModalStyle = {
 
 const buttonModalStyle = {
   fontSize: "18px",
-  backgroundColor: "#9bfbb0",
+  backgroundColor: "var(--button-color)",
   width: "250px",
   height: "40px",
-  border: "3px solid #9BFBB0",
+  border: "3px solid var(--button-color)",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
   borderRadius: "5px",
   margin: "0 auto",
@@ -131,7 +133,7 @@ export default function LoginPage() {
 
   return (
     <LoginContainer>
-      <h1>Building Passport</h1>
+      <img src={Logo} alt="logo" />
       <StyledForm onSubmit={loginResident}>
         <TextField
           name="buildingId"
@@ -163,6 +165,11 @@ export default function LoginPage() {
         <TextField
           name="password"
           sx={{ marginTop: "10px" }}
+          style={{
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+              zIndex: -1,
+            },
+          }}
           label="Senha"
           type="password"
           variant="outlined"
@@ -173,7 +180,7 @@ export default function LoginPage() {
         />
         <Button
           variant="contained"
-          sx={{ marginTop: "10px" }}
+          sx={{ marginTop: "20px", backgroundColor: "var(--button-color)" }}
           type="submit"
           disabled={disabled}
         >
@@ -199,8 +206,13 @@ export default function LoginPage() {
 
 const LoginContainer = styled.div`
   display: flex;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
+  img {
+    height: 180px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -208,4 +220,6 @@ const StyledForm = styled.form`
   flex-direction: column;
 `;
 
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  margin-top: 30px;
+`;

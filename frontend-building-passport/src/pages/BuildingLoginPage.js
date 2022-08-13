@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { BuildingContext } from "../contexts/BuildingContext";
+import Logo from "../assets/Logo.png";
 
 Modal.setAppElement(document.querySelector(".root"));
 
@@ -86,6 +87,7 @@ export default function BuildingLoginPage() {
 
   return (
     <BuildingLogingContainer>
+      <img src={Logo} alt="logo" />
       <h1>Building Passport</h1>
       <StyledForm onSubmit={login}>
         <TextField
