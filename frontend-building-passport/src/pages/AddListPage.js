@@ -44,10 +44,10 @@ const h3ModalStyle = {
 
 const buttonModalStyle = {
   fontSize: "18px",
-  backgroundColor: "#9bfbb0",
+  backgroundColor: "var(--button-color)",
   width: "250px",
   height: "40px",
-  border: "3px solid #9BFBB0",
+  border: "3px solid var(--button-color)",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
   borderRadius: "5px",
   margin: "0 auto",
@@ -126,9 +126,10 @@ export default function AddListPage() {
       <AddListContainer>
         <h2>Criando novo evento</h2>
         <StyledForm onSubmit={sendList}>
-          <h3>Detalhes do evento</h3>
+          <h3>Detalhes do evento:</h3>
           <TextField
             name="title"
+            className="input"
             sx={{ marginTop: "10px" }}
             label="Nome do Evento/Festa"
             type="text"
@@ -145,6 +146,7 @@ export default function AddListPage() {
           />
           <TextField
             name="date"
+            className="input"
             sx={{ marginTop: "10px" }}
             label="Data"
             type="text"
@@ -161,6 +163,7 @@ export default function AddListPage() {
           />
           <TextField
             name="hour"
+            className="input"
             sx={{ marginTop: "10px" }}
             label="Horário"
             type="text"
@@ -175,13 +178,14 @@ export default function AddListPage() {
             value={listInfo.hour}
             required
           />
-          <h3>Convidados</h3>
+          <h3>Convidados:</h3>
           <CheckContainer>
             <p>Utilizar lista de outro evento?</p>
             <Checkbox checked={checked} onChange={handleCheck} />
           </CheckContainer>
           <TextField
             name="listId"
+            className="input"
             sx={{ marginTop: "10px" }}
             label="Lista antinga"
             select
@@ -202,6 +206,7 @@ export default function AddListPage() {
               <GuestContainer key={index}>
                 <TextField
                   name="name"
+                  className="input"
                   sx={{ marginTop: "10px" }}
                   label={`Nome Convidado ${index + 1}`}
                   type="text"
@@ -212,6 +217,7 @@ export default function AddListPage() {
                 />
                 <TextField
                   name="email"
+                  className="input"
                   sx={{ marginTop: "10px" }}
                   label="E-mail"
                   type="email"
@@ -225,6 +231,7 @@ export default function AddListPage() {
           })}
           <Button
             variant="contained"
+            className="button add"
             sx={{ marginTop: "10px" }}
             type="button"
             endIcon={<AddBoxIcon />}
@@ -232,7 +239,12 @@ export default function AddListPage() {
           >
             Adicionar Convidado
           </Button>
-          <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
+          <Button
+            variant="contained"
+            className="button"
+            sx={{ marginTop: "10px" }}
+            type="submit"
+          >
             Finalizar Lista
           </Button>
         </StyledForm>
@@ -254,19 +266,57 @@ export default function AddListPage() {
 }
 
 const AddListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15%;
+
   h2 {
+    width: 100%;
     margin-top: 100px;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  h3 {
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
   }
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 70%;
+    background-color: var(--button-color);
+  }
+
+  .add {
+    width: 85%;
+  }
 `;
 
 const CheckContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: left;
+  width: 100%;
+
+  p {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 
 const GuestContainer = styled.div``;

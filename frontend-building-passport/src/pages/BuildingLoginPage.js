@@ -27,6 +27,7 @@ const modalStyles = {
   },
   overlay: {
     backgroundColor: "rgba(0.5, 0.5,0.5, 0.6)",
+    zIndex: 3,
   },
 };
 
@@ -42,10 +43,10 @@ const h3ModalStyle = {
 
 const buttonModalStyle = {
   fontSize: "18px",
-  backgroundColor: "#9bfbb0",
+  backgroundColor: "var(--button-color)",
   width: "250px",
   height: "40px",
-  border: "3px solid #9BFBB0",
+  border: "3px solid var(--button-color)",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
   borderRadius: "5px",
   margin: "0 auto",
@@ -88,10 +89,10 @@ export default function BuildingLoginPage() {
   return (
     <BuildingLogingContainer>
       <img src={Logo} alt="logo" />
-      <h1>Building Passport</h1>
       <StyledForm onSubmit={login}>
         <TextField
           name="key"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="Chave da API"
           type="text"
@@ -100,7 +101,12 @@ export default function BuildingLoginPage() {
           value={apiKey.key}
           required
         />
-        <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
+        <Button
+          variant="contained"
+          className="button"
+          sx={{ marginTop: "30px", backgroundColor: "var(--button-color)" }}
+          type="submit"
+        >
           Entrar
         </Button>
       </StyledForm>
@@ -124,10 +130,25 @@ const BuildingLogingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 200px;
+
+  img {
+    height: 180px;
+  }
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  padding: 0 15%;
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 70%;
+  }
 `;

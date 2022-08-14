@@ -42,7 +42,9 @@ export default function MainPage() {
       <MainPageContainer>
         <h2>Notícias</h2>
         {news.length === 0 ? (
-          <NewsContainer>Não há notícias</NewsContainer>
+          <NewsContainer>
+            <p>Não há notícias</p>
+          </NewsContainer>
         ) : (
           <NewsContainer>
             {news.map((news) => (
@@ -53,8 +55,9 @@ export default function MainPage() {
                   setOpenNews(true);
                 }}
               >
-                <p>{dayjs(news.createAt).format("DD/MM")}</p>
-                <p>{news.title}</p>
+                <p>{`${dayjs(news.createAt).format("DD/MM")} - ${
+                  news.title
+                }`}</p>
               </li>
             ))}
           </NewsContainer>
@@ -66,20 +69,21 @@ export default function MainPage() {
         <h2>Seus Eventos</h2>
         {events.length === 0 ? (
           <EventsContainer>
-            Você não possui eventos cadastrados ainda
+            <p>Você não possui eventos cadastrados ainda</p>
           </EventsContainer>
         ) : (
           <EventsContainer>
             {events.map((event) => (
               <li key={event.id} onClick={() => navigate(`/list/${event.id}`)}>
-                <p>{event.title}</p>
-                <p>{`${event.date}-${event.hour}`}</p>
+                <p>{`Evento: ${event.title}`}</p>
+                <p> {`Data: ${event.date}-${event.hour}`}</p>
               </li>
             ))}
           </EventsContainer>
         )}
         <Button
           variant="contained"
+          className="button"
           endIcon={<FormatListNumberedTwoToneIcon />}
           onClick={() => navigate("/create-list")}
         >
@@ -91,28 +95,89 @@ export default function MainPage() {
 }
 
 const MainPageContainer = styled.div`
+  padding: 0 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   h2 {
+    width: 100%;
     margin-top: 100px;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--primary-color);
+  }
+
+  .button {
+    background-color: var(--button-color);
+    margin: 30px 0;
+    width: 70%;
   }
 `;
 
 const NewsContainer = styled.ul`
+  width: 100%;
+
   li {
     display: flex;
-    justify-content: space-between;
+    width: 100%;
     cursor: pointer;
+
+    p {
+      width: 100%;
+      border-bottom: 1px solid var(--primary-color);
+      text-align: center;
+      font-size: 18px;
+      line-height: 24px;
+    }
   }
 `;
 
 const NewsOpenContainer = styled.div`
-  border: 1px solid #000;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
   display: ${(props) => (props.open ? "block" : "none")};
+
+  h3 {
+    width: 100%;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: bold;
+    border-bottom: 1px dotted var(--primary-color);
+  }
+
+  p {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 
 const EventsContainer = styled.ul`
+  width: 100%;
+
   li {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--primary-color);
     cursor: pointer;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    width: 80%;
+
+    font-size: 18px;
+    line-height: 24px;
+    padding-left: 15px;
+    height: 50px;
+    text-align: center;
   }
 `;

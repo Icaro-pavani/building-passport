@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { IoLockClosed } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import LogoImage from "../assets/Logo.png";
 
 export default function GuestHeader() {
   const navigate = useNavigate();
@@ -8,8 +8,7 @@ export default function GuestHeader() {
   return (
     <GuestHeaderContainer>
       <Logo onClick={() => navigate("/main")}>
-        <IoLockClosed className="lock" />
-        <h1>Building Passport</h1>
+        <img src={LogoImage} alt="logo" />
       </Logo>
     </GuestHeaderContainer>
   );
@@ -28,29 +27,16 @@ const GuestHeaderContainer = styled.div`
   background-color: #fff;
   z-index: 3;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-
-  .exit {
-    font-size: 54px;
-    color: #005985;
-    cursor: pointer;
-  }
 `;
 
 const Logo = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 
-  h1 {
-    /* font-family: "Righteous", cursive; */
-    font-size: 36px;
-    line-height: 45px;
-    letter-spacing: -0.012em;
-    color: #005985;
-  }
-
-  .lock {
-    font-size: 64px;
-    color: #005985;
+  img {
+    height: 120px;
   }
 `;

@@ -12,9 +12,10 @@ export default function QRCodePage() {
   return (
     <QRCodeContainer>
       <GuestHeader />
-      <img src={image} alt="qrcode" />
+      <img className="qrcode" src={image} alt="qrcode" />
       <h1>
-        Sua presença já foi confirmada! Utilize o QRCode acima para acesso!
+        Sua presença já foi confirmada! Utilize o <span>QRCode</span> acima para
+        acesso ao condomínio no dia do evento!
       </h1>
       <h2>Um e-mail foi enviado com o link para acesso a este QRCode.</h2>
     </QRCodeContainer>
@@ -22,7 +23,31 @@ export default function QRCodePage() {
 }
 
 const QRCodeContainer = styled.div`
-  img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15%;
+
+  .qrcode {
     margin-top: 100px;
+    height: 300px;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 30px;
+    text-align: justify;
+    margin-top: 15px;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 24px;
+    text-align: justify;
+    margin-top: 10px;
+  }
+
+  span {
+    font-weight: bold;
   }
 `;

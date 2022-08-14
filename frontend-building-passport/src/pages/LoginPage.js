@@ -9,28 +9,6 @@ import Logo from "../assets/Logo.png";
 
 Modal.setAppElement(document.querySelector(".root"));
 
-const textFieldStyle = {
-  "& label.Mui-focused": {
-    color: "green",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "green",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "red",
-      backgroundColor: "#00000050",
-      color: "#000",
-    },
-    "&:hover fieldset": {
-      borderColor: "yellow",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "green",
-    },
-  },
-};
-
 const modalStyles = {
   content: {
     top: "50%",
@@ -136,6 +114,7 @@ export default function LoginPage() {
       <img src={Logo} alt="logo" />
       <StyledForm onSubmit={loginResident}>
         <TextField
+          className="input"
           name="buildingId"
           sx={{ marginTop: "10px" }}
           label="Condomínio"
@@ -153,6 +132,7 @@ export default function LoginPage() {
         </TextField>
         <TextField
           name="email"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="E-mail"
           type="email"
@@ -164,12 +144,8 @@ export default function LoginPage() {
         />
         <TextField
           name="password"
+          className="input"
           sx={{ marginTop: "10px" }}
-          style={{
-            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
-              zIndex: -1,
-            },
-          }}
           label="Senha"
           type="password"
           variant="outlined"
@@ -181,6 +157,7 @@ export default function LoginPage() {
         <Button
           variant="contained"
           sx={{ marginTop: "20px", backgroundColor: "var(--button-color)" }}
+          className="button"
           type="submit"
           disabled={disabled}
         >
@@ -209,7 +186,8 @@ const LoginContainer = styled.div`
   height: 100vh;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 170px;
+
   img {
     height: 180px;
   }
@@ -218,6 +196,17 @@ const LoginContainer = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 15%;
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 70%;
+  }
 `;
 
 const StyledLink = styled(Link)`

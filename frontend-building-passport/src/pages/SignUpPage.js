@@ -125,6 +125,7 @@ export default function SignUpPage() {
       <StyledForm onSubmit={signUpResident}>
         <TextField
           name="buildingId"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="Condomínio"
           select
@@ -145,6 +146,7 @@ export default function SignUpPage() {
         </TextField>
         <TextField
           name="id"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="Residente"
           select
@@ -165,6 +167,7 @@ export default function SignUpPage() {
         </TextField>
         <TextField
           name="cpf"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="CPF"
           type="text"
@@ -181,6 +184,7 @@ export default function SignUpPage() {
         />
         <TextField
           name="email"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="E-mail"
           type="email"
@@ -191,6 +195,7 @@ export default function SignUpPage() {
         />
         <TextField
           name="password"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="Senha"
           type="password"
@@ -201,6 +206,7 @@ export default function SignUpPage() {
         />
         <TextField
           name="confirmPassword"
+          className="input"
           sx={{ marginTop: "10px" }}
           label="Confirme a Senha"
           type="password"
@@ -211,6 +217,7 @@ export default function SignUpPage() {
         />
         <Button
           variant="contained"
+          className="button"
           sx={{ marginTop: "20px", backgroundColor: "var(--button-color)" }}
           type="submit"
         >
@@ -240,6 +247,7 @@ const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 
   img {
     height: 180px;
@@ -249,6 +257,17 @@ const SignUpContainer = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 0 15%;
+  width: 100%;
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 70%;
+  }
 `;
 
 const StyledLink = styled(Link)`

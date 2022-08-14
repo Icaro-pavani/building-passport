@@ -110,7 +110,8 @@ export default function GuestInfoPage() {
       <StyledForm onSubmit={sendConfirmation}>
         <TextField
           name="name"
-          sx={{ marginTop: "10px" }}
+          className="input"
+          sx={{ marginTop: "15px" }}
           label="Nome completo"
           type="text"
           variant="outlined"
@@ -120,7 +121,8 @@ export default function GuestInfoPage() {
         />
         <TextField
           name="email"
-          sx={{ marginTop: "10px" }}
+          className="input"
+          sx={{ marginTop: "15px" }}
           label="E-mail"
           type="email"
           variant="outlined"
@@ -130,7 +132,8 @@ export default function GuestInfoPage() {
         />
         <TextField
           name="cpf"
-          sx={{ marginTop: "10px" }}
+          className="input"
+          sx={{ marginTop: "15px" }}
           label="CPF"
           type="text"
           variant="outlined"
@@ -144,7 +147,12 @@ export default function GuestInfoPage() {
           value={guestInfo.cpf}
           required
         />
-        <Button variant="contained" sx={{ marginTop: "10px" }} type="submit">
+        <Button
+          variant="contained"
+          className="button"
+          sx={{ marginTop: "10px" }}
+          type="submit"
+        >
           Confirmar Presença
         </Button>
       </StyledForm>
@@ -165,12 +173,33 @@ export default function GuestInfoPage() {
 }
 
 const GuestInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15%;
+
   h2 {
+    width: 100%;
     margin-top: 100px;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
   }
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 70%;
+    background-color: var(--button-color);
+  }
 `;

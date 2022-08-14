@@ -133,11 +133,14 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
         --button-color: #00a5e9;
+        --primary-color: #000;
+        --background: #fafafa;
     }
 
     html,
     body {
         font-family: 'Roboto', sans-serif;
+        background-color: var(--background);
     }
 
     ::placeholder {
