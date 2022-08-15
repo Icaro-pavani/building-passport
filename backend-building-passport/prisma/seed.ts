@@ -29,6 +29,17 @@ async function main() {
     create: buildingAPI,
   });
 
+  const buildingAPI2 = {
+    key: "lC7j5MGfMh7xvXWDqdMnEFFxtrBpzZq18HBDYGM1dii9NoLL2Ul3XrwCTvoePIOLpJZWPSUDhqIWbW4xb7sLAROdpcjWkbYFVQliTyLCJHkieQPBUUuAzNCCKiKx2Gd5",
+    buildingId: buildingRegistered.id,
+  };
+
+  await prisma.buildingKey.upsert({
+    where: { buildingId: buildingAPI2.buildingId },
+    update: {},
+    create: buildingAPI2,
+  });
+
   const residents = [
     {
       name: "Fulano",
