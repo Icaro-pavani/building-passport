@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import listRepository from "../repositories/listRepository.js";
 import residentRepository from "../repositories/residentRepository.js";
 import { AddResidentData } from "../schemas/addResidentSchema.js";
 
@@ -26,6 +27,12 @@ async function updateStatus(residentId: number, isLiving: boolean) {
 }
 
 async function deleteResident(residentId: number) {
+  const lists = await listRepository.findAllListsByResidentId(residentId);
+
+  for (let i = 0; i < lists.length; i++) {
+    await listRepository.removeListGuestRealtionsByList(lists[i].id);
+  }
+  await listRepository.removeAllResidentLists(residentId);
   await residentRepository.remove(residentId);
 }
 

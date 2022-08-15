@@ -48,11 +48,21 @@ async function createListGuestRelations(
   });
 }
 
+async function removeListGuestRealtionsByList(listId: number) {
+  return prisma.listGuest.deleteMany({ where: { listId } });
+}
+
+async function removeAllResidentLists(residentId: number) {
+  return prisma.list.deleteMany({ where: { residentId } });
+}
+
 const listRepository = {
   findAllListsByResidentId,
   addNewList,
   findListByNameAndResidentId,
   createListGuestRelations,
   findOneById,
+  removeListGuestRealtionsByList,
+  removeAllResidentLists,
 };
 export default listRepository;
