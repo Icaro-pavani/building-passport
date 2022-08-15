@@ -6,7 +6,14 @@ export default function QRCodePage() {
   const [image, setImage] = useState("");
   useEffect(() => {
     const url = window.location.href;
-    const imageSource = url.split("?src=")[1];
+    const imageSource = url
+      .split("?src=")[1]
+      .replace(/%3A/g, ":")
+      .replace(/%2F/g, "/")
+      .replace(/%3B/g, ";")
+      .replace(/%2C/g, ",")
+      .replace(/%3D/g, "=")
+      .replace(/%2B/g, "+");
     setImage(imageSource);
   }, []);
   return (
