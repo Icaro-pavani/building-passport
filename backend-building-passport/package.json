@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "prisma": {
-    "seed": "ts-node prisma/seed.ts",
-    "seed:deploy": "node dist/prisma/seed.js"
+    "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
     "dev": "nodemon src/server.ts",
