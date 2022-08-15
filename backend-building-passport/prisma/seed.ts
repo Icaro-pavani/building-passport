@@ -12,10 +12,25 @@ async function main() {
     state: "São Paulo",
   };
 
+  const building2 = {
+    name: "Residencial Two",
+    street: "Rua Bertrano de Castro",
+    number: "500",
+    district: "Vila Jaca",
+    city: "Saltinho",
+    state: "São Paulo",
+  };
+
   const buildingRegistered = await prisma.building.upsert({
     where: { name: building.name },
     update: {},
     create: building,
+  });
+
+  const buildingRegistered2 = await prisma.building.upsert({
+    where: { name: building2.name },
+    update: {},
+    create: building2,
   });
 
   const buildingAPI = {
@@ -31,7 +46,7 @@ async function main() {
 
   const buildingAPI2 = {
     key: "lC7j5MGfMh7xvXWDqdMnEFFxtrBpzZq18HBDYGM1dii9NoLL2Ul3XrwCTvoePIOLpJZWPSUDhqIWbW4xb7sLAROdpcjWkbYFVQliTyLCJHkieQPBUUuAzNCCKiKx2Gd5",
-    buildingId: buildingRegistered.id,
+    buildingId: buildingRegistered2.id,
   };
 
   await prisma.buildingKey.upsert({
