@@ -272,4 +272,5 @@ const StyledForm = styled.form`
 
 const StyledLink = styled(Link)`
   margin-top: 30px;
+  color: var(--button-color);
 `;

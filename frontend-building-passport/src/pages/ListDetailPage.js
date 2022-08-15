@@ -27,16 +27,20 @@ export default function ListDetailPage() {
       <h2>Detalhes do evento</h2>
       {listInfo.title ? (
         <>
-          <h3>{listInfo.title}</h3>
+          <h3>
+            Nome do evento: <span>{listInfo.title}</span>
+          </h3>
           <h4>
             Data: {listInfo.date} - Horário: {listInfo.hour}
           </h4>
           <GuestContainer>
-            <h4>Convidados</h4>
+            <h4>Convidados:</h4>
             {listInfo.listGuest.map((item) => (
               <li>
                 <p>{item.guest.name}</p>
                 <p>
+                  {" "}
+                  Confirmado?
                   {item.confirmed ? (
                     <CheckBoxIcon sx={{ color: "green" }} />
                   ) : (
@@ -55,9 +59,64 @@ export default function ListDetailPage() {
 }
 
 const ListDetailContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 15%;
+
   h2 {
-    margin-top: 100px;
+    width: 100%;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 40px;
+  }
+
+  h3 {
+    margin-top: 15px;
+    font-size: 20px;
+    line-height: 26px;
+    width: 100%;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  h4 {
+    margin-top: 15px;
+    font-size: 20px;
+    line-height: 26px;
+    width: 100%;
   }
 `;
 
-const GuestContainer = styled.ul``;
+const GuestContainer = styled.ul`
+  width: 100%;
+
+  h4 {
+    margin-top: 15px;
+    font-size: 20px;
+    line-height: 26px;
+    width: 100%;
+    font-weight: bold;
+    border-bottom: 1px dotted var(--primary-color);
+  }
+
+  li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px dotted var(--primary-color);
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      line-height: 24px;
+      margin: 10px;
+    }
+  }
+`;

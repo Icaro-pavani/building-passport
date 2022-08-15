@@ -165,6 +165,7 @@ export default function LoginPage() {
         </Button>
       </StyledForm>
       <StyledLink to="/sign-up">Não possui cadastro?</StyledLink>
+      <StyledLink to="/building">Entrar como administrador do condomínio</StyledLink>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={triggerModal}
@@ -183,7 +184,6 @@ export default function LoginPage() {
 
 const LoginContainer = styled.div`
   display: flex;
-  height: 100vh;
   flex-direction: column;
   align-items: center;
   margin-top: 170px;
@@ -211,4 +211,5 @@ const StyledForm = styled.form`
 
 const StyledLink = styled(Link)`
   margin-top: 30px;
+  color: var(--button-color);
 `;

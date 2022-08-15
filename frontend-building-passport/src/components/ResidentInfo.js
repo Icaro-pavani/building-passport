@@ -39,20 +39,44 @@ export default function ResidentInfo({
       <>
         <p>Atualmente morando? </p>
         {isLiving ? (
-          <CheckBoxRounded onClick={updateLivingStatus} />
+          <CheckBoxRounded className="check" onClick={updateLivingStatus} />
         ) : (
-          <DisabledByDefault onClick={updateLivingStatus} />
+          <DisabledByDefault
+            className="not-check"
+            onClick={updateLivingStatus}
+          />
         )}
       </>
       <p>
         {name} - {apartment}
       </p>
-      <DeleteForeverIcon onClick={deleteResindent} />
+      <DeleteForeverIcon className="icon-right" onClick={deleteResindent} />
     </ResidentContainer>
   );
 }
 
 const ResidentContainer = styled.li`
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px dotted var(--primary-color);
+
+  p {
+    width: 35%;
+  }
+
+  .check {
+    margin-right: 15px;
+    color: green;
+  }
+
+  .not-check {
+    margin-right: 15px;
+    color: red;
+  }
+
+  .icon-right {
+    color: gray;
+  }
 `;

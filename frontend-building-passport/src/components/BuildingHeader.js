@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { IoLockClosed } from "react-icons/io5";
-import { IoExit } from "react-icons/io5";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { BuildingContext } from "../contexts/BuildingContext";
+import LogoImage from "../assets/Logo.png";
 
 export default function BuildingHeader() {
   const navigate = useNavigate();
@@ -18,10 +18,9 @@ export default function BuildingHeader() {
   return (
     <HeaderContainer>
       <Logo onClick={() => navigate("/building/residents")}>
-        <IoLockClosed className="lock" />
-        <h1>Building Passport</h1>
+        <img src={LogoImage} alt="logo" />
       </Logo>
-      <IoExit className="exit" onClick={logout} />
+      <ExitToAppIcon className="exit" onClick={logout} />
     </HeaderContainer>
   );
 }
@@ -42,7 +41,7 @@ const HeaderContainer = styled.div`
 
   .exit {
     font-size: 54px;
-    color: #005985;
+    color: var(--primary-color);
     cursor: pointer;
   }
 `;
@@ -52,16 +51,7 @@ const Logo = styled.div`
   align-items: center;
   cursor: pointer;
 
-  h1 {
-    /* font-family: "Righteous", cursive; */
-    font-size: 36px;
-    line-height: 45px;
-    letter-spacing: -0.012em;
-    color: #005985;
-  }
-
-  .lock {
-    font-size: 64px;
-    color: #005985;
+  img {
+    height: 120px;
   }
 `;

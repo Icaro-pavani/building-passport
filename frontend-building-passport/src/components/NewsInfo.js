@@ -19,9 +19,11 @@ export default function NewsInfo({ id, title, createAt, setLoading, loading }) {
 
   return (
     <ResidentContainer>
-      <p>{title}</p>
-      <p>{dayjs(createAt).format("DD/MM")}</p>
-      <DeleteForeverIcon onClick={deleteNews} />
+      <p>
+        Título: <span>{title}</span>
+      </p>
+      <p>Data: {dayjs(createAt).format("DD/MM")}</p>
+      <DeleteForeverIcon className="icon" onClick={deleteNews} />
     </ResidentContainer>
   );
 }
@@ -29,4 +31,21 @@ export default function NewsInfo({ id, title, createAt, setLoading, loading }) {
 const ResidentContainer = styled.li`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px dotted var(--primary-color);
+
+  p {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 5px 0;
+  }
+
+  span {
+    font-weight: bold;
+  }
+
+  .icon {
+    color: gray;
+  }
 `;
