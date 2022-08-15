@@ -13,7 +13,8 @@ export default function QRCodePage() {
       .replace(/%3B/g, ";")
       .replace(/%2C/g, ",")
       .replace(/%3D/g, "=")
-      .replace(/%2B/g, "+");
+      .replace(/%2B/g, "+")
+      .replace(/%20/g, " ");
     setImage(imageSource);
   }, []);
   return (
